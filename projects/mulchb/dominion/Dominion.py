@@ -27,11 +27,11 @@ class Coin_card(Card):
 class Copper(Coin_card):
     def __init__(self):
         Coin_card.__init__(self,"Copper",0,1)
-        
+
 class Silver(Coin_card):
     def __init__(self):
         Coin_card.__init__(self,"Silver",3,2)
-        
+
 class Gold(Coin_card):
     def __init__(self):
         Coin_card.__init__(self,"Gold",6,3)
@@ -43,11 +43,11 @@ class Victory_card(Card):
 class Estate(Victory_card):
     def __init__(self):
         Victory_card.__init__(self,"Estate",2,1)
-        
+
 class Duchy(Victory_card):
     def __init__(self):
         Victory_card.__init__(self,"Duchy",5,3)
-    
+
 class Province(Victory_card):
     def __init__(self):
         Victory_card.__init__(self,"Province",8,6)
@@ -78,7 +78,7 @@ class Action_card(Card):
             player.draw()
     def play(self,player,players,supply,trash):
         pass
-    
+
 class Woodcutter(Action_card):
     def __init__(self):
         Action_card.__init__(self,"Woodcutter",3,0,0,1,2)
@@ -121,7 +121,7 @@ class Moneylender(Action_card):
     def __init__(self):
         Action_card.__init__(self,"Moneylender",4,0,0,0,0)
     def play(self,player,players,supply,trash):
-        c = getcard("Copper",supply,player.hand,"your hand")        
+        c = getcard("Copper",supply,player.hand,"your hand")
         if c:
             trash.append(c)
             player.hand.remove(c)
@@ -131,7 +131,7 @@ class Chapel(Action_card):
     def __init__(self):
         Action_card.__init__(self,"Chapel",2,0,0,0,0)
     def play(self,player,players,supply,trash):
-        trashed=0        
+        trashed=0
         while trashed<4 and len(player.hand)>0:
             trashcard = input("Choose a card from your hand to trash: ")
             if not trashcard:
@@ -146,7 +146,7 @@ class Cellar(Action_card):
     def __init__(self):
         Action_card.__init__(self,"Cellar",2,1,0,0,0)
     def play(self,player,players,supply,trash):
-        discarded=0        
+        discarded=0
         while len(player.hand)>0:
             dis_card=input("Choose a card from your hand to discard: ")
             if not dis_card:
@@ -227,7 +227,7 @@ class Moat(Action_card):
     def __init__(self):
         Action_card.__init__(self,"Moat",2,0,2,0,0)
     def react(self,player):
-        player.show()        
+        player.show()
         return player.yesnoinput(player.name + ", you have a " + self.name +
                         " in your hand.  Do you want to block the attack?")
 
@@ -267,7 +267,7 @@ class Bureaucrat(Action_card):
                         break
                 else:
                     player.show()
-                    while True:                        
+                    while True:
                         putback = player.choose_discard(player.name + ", which victory card" +
                         " do you want to put on top of your deck?\n--> ")
                         c = getcard(putback,supply,player.hand,"your hand",["victory"])
@@ -275,7 +275,7 @@ class Bureaucrat(Action_card):
                             player.hand.remove(c)
                             player.deck.insert(0,c)
                             break
-                        
+
 class Militia(Action_card):
     def __init__(self):
         Action_card.__init__(self,"Militia",4,0,0,0,2)
@@ -294,7 +294,7 @@ class Militia(Action_card):
                             if c:
                                 player.hand.remove(c)
                                 player.discard.append(c)
-                            
+
 class Spy(Action_card):
     def __init__(self):
         Action_card.__init__(self,"Spy",4,1,1,0,0)
@@ -332,7 +332,7 @@ class Thief(Action_card):
                 print( player.name, namesinlist(player.hold))
                 if "coin" in catinlist(player.hold):
                     while True:
-                        burn = input("Which card would you like " + player.name + " to trash?\n-->")                
+                        burn = input("Which card would you like " + player.name + " to trash?\n-->")
                         c = getcard(burn,supply,player.hold," the top 2 cards",["coin"])
                         if c:
                             player.hold.remove(c)
@@ -350,7 +350,7 @@ class Throne_Room(Action_card):
     def play(self,player,players,supply,trash):
         if "action" in catinlist(player.hand):
             while True:
-                double = input("What card would you like to double?\n--> ")            
+                double = input("What card would you like to double?\n--> ")
                 c = getcard(double,supply,player.hand," your hand",["action"])
                 if c:
                     c.use(player,trash)
@@ -361,7 +361,7 @@ class Throne_Room(Action_card):
                     c.play(player,players,supply,trash)
                     break
 
-                
+
 class Player():
     def __init__(self,name):
         self.name = name
@@ -405,7 +405,7 @@ class Player():
             if playthis:
                 c = getcard(playthis,supply,self.hand,"your hand",['action'])
                 if c:
-                    self.actions = self.actions - 1 
+                    self.actions = self.actions - 1
                     c.use(self,trash)
                     c.augment(self)
                     c.play(self,players,supply,trash)
@@ -430,7 +430,7 @@ class Player():
                     self.discard.append(supply[purchase].pop())
                     self.buys = self.buys -1
                     self.purse = self.purse - c.cost
-                    
+
         #cleanup phase
         self.discard = self.discard + self.played + self.hand + self.aside
         self.played = []
@@ -450,12 +450,12 @@ class Player():
     def yesnoinput(self,prompt,yesstring='',nostring=''):
         print(prompt + "\n1 - Yes" + yesstring + "\n0 - No" + nostring)
         while True:
-            r = input("--> ")        
+            r = input("--> ")
             if r == "0":
                 return False
             if r == "1":
-                return True    
-    
+                return True
+
     def choose_discard(self,prompt):
         return input(prompt)
 
@@ -471,7 +471,7 @@ class Player():
         if len(self.aside)>0:
             print ("aside:", ", ".join(sorted(namesinlist(self.aside))))
         print ("\r")
-    
+
     def action_balance(self):
         balance = 0
         for c in self.stack():
@@ -508,7 +508,7 @@ class ComputerPlayer(Player):
         #beginning and middle of game
         self.buygaintable1 = ["Province","Gold","Laboratory","Festival","Witch",
         "Council Room","Market","Militia","Adventurer","Smithy","Bureaucrat","Silver","Moat",""]
-        #end of game        
+        #end of game
         self.buygaintable2 = ["Province","Gardens","Duchy","Estate","Gold","Silver",""]
         #beginning and middle of the game, too many action cards
         self.buygaintable3 = ["Province","Gold","Festival","Laboratory","Market","Village",
@@ -518,7 +518,7 @@ class ComputerPlayer(Player):
         self.discardtable1 = ["Gardens","Duchy","Province","Estate","Curse","Copper",
         "Village","Bureaucrat","Silver","Militia","Smithy","Council Room","Witch",
         "Festival","Market","Adventurer","Laboratory","Gold","Moat"]
-        
+
     def turn(self,players,supply,trash):
         self.show()
         self.actions = 1
@@ -534,7 +534,7 @@ class ComputerPlayer(Player):
                     print (self.name + " plays " + c.name)
                     self.actions = self.actions - 1
                     c.use(self,trash)
-                    self.index=0                    
+                    self.index=0
                     c.augment(self)
                     c.play(self,players,supply,trash)
                     self.show()
@@ -567,7 +567,7 @@ class ComputerPlayer(Player):
                     print (self.name + " bought " + c.name)
                 else:
                     self.index += 1
-                    
+
         #cleanup phase
         self.discard = self.discard + self.played + self.hand + self.aside
         self.played = []
@@ -575,7 +575,7 @@ class ComputerPlayer(Player):
         self.aside = []
         for i in range(5):
             self.draw()
-    
+
     def getcard(self,name,supply,target_list=None,target_name= "the supply anymore",categories=['action','coin','curse','victory'],upto=100):
         if not name in supply:
             #print name + " is not in this game."
@@ -598,9 +598,9 @@ class ComputerPlayer(Player):
             #print name + " costs " + str(c.cost)
             return None
         return c
-    
+
     def choose_discard(self,prompt):
-        index = 0        
+        index = 0
         while True:
             dis_card = self.discardtable1[index]
             c = self.getcard(dis_card,[dis_card],self.hand)
@@ -608,7 +608,7 @@ class ComputerPlayer(Player):
                 return c.name
             else:
                 index+=1
-            
+
     def yesnoinput(self,prompt,yesstring='',nostring=''):
         return True
 
@@ -617,7 +617,7 @@ class ComputerPlayer(Player):
 
 class TablePlayer(ComputerPlayer):
     def __init__(self,name):
-        ComputerPlayer.__init__(self,name) 
+        ComputerPlayer.__init__(self,name)
         self.index=0
         self.buygaintable=[]
         q=re.match(r'([a-zA-Z]+)(\d+)',name)
@@ -630,7 +630,7 @@ class TablePlayer(ComputerPlayer):
         self.discardtable1 = ["Gardens","Duchy","Province","Estate","Curse","Copper",
         "Village","Bureaucrat","Silver","Militia","Smithy","Council Room","Witch",
         "Festival","Market","Adventurer","Laboratory","Gold","Moat"]
-    
+
     def turn(self,players,supply,trash):
         self.show()
         self.actions = 1
@@ -646,7 +646,7 @@ class TablePlayer(ComputerPlayer):
                     #print (self.name + " plays " + c.name)
                     self.actions = self.actions - 1
                     c.use(self,trash)
-                    self.index=0                    
+                    self.index=0
                     c.augment(self)
                     c.play(self,players,supply,trash)
                     self.show()
@@ -676,7 +676,7 @@ class TablePlayer(ComputerPlayer):
                     self.purse = self.purse - c.cost
                 else:
                     self.index += 1
-                    
+
         #cleanup phase
         self.discard = self.discard + self.played + self.hand + self.aside
         self.played = []
@@ -684,8 +684,8 @@ class TablePlayer(ComputerPlayer):
         self.aside = []
         for i in range(5):
             self.draw()
-    
-        
+
+
 def gameover(supply):
     if len(supply["Province"])==0:
         return True
@@ -698,7 +698,7 @@ def gameover(supply):
     return False
 
 def namesinlist(cardlist):
-    namelist = []    
+    namelist = []
     for c in cardlist:
         namelist.append(c.name)
     return namelist
