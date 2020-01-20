@@ -21,7 +21,6 @@ from testUtility import getBoxes, getSupply, getSupplyOrder, getBoxList, getPlay
 player_names = ["Annie", "*Ben", "*Carla"]
 
 # number of curses and victory cards
-# set the number of victory cards to negative number, imdeiatley ends the game
 if len(player_names) > 2:
     nV = 12
 else:
